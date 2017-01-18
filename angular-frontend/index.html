@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+  <title>Basic Angular Starter App</title>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+
+<body>
+  <!-- the app directive encapsulates the whole of your app - your controllers need to go inside this -->
+  <div ng-app="MyApp" class="container">
+    <div ng-controller="TestCtrl">
+      <h1>Basic Angular Starter App</h1>
+      <p>Value is {{myNumber}}</p>
+      <!-- also bind myNumber to a text field -->
+      <div class="form-group">
+      <input class="form-control col-sm-2" type="text" ng-model="myNumber" />
+      <button class="btn btn-success col-sm-2" style="margin-top:10px" ng-click="changeValue()">Change value!</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-route/angular-route.min.js"></script>
+
+  <script src="js/app.js"></script>
+  <script src="js/controllers/test.js"></script>
+
+</body>
+
+</html>
