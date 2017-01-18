@@ -1,3 +1,7 @@
+/**
+ * Main app file
+ */
+
 // these are intentionally global (by not prefixing with var), as we need to access them elsewhere
 app = angular.module('MyApp', [
     'MyApp.controllers'
