@@ -1,0 +1,88 @@
+<?php 
+
+/**
+ * Implementation of hook_block_info
+ */
+function ajax_user_search_block_info() {
+    
+    return [
+        'ajax_user_search_form' => [
+            'info'   => 'Search Users',
+            'weight' => 0,
+            'status' => 0,
+            'region' => 'content',
+            'cache'  => DRUPAL_NO_CACHE
+        ]
+    ];
+
+}
+
+/**
+ * Implementation of hook_block_view
+ */
+function ajax_user_search_block_view($delta = '') {
+    
+    if ($delta == 'ajax_user_search_form') {
+
+        $module_path = drupal_get_path('module', 'ajax_user_search');
+        $template    = file_get_contents($module_path . '/user-search/dist/index.html');
+
+        # add the correct path prefix to compiled js files ..
+        $template = preg_replace('/(\w+\.\w+\.\w+\.(js|css))/', '/' . $module_path . '/user-search/dist/$1', $template);
+
+        return [
+            'subject' => 'Search Users',
+            'content' => $template
+        ];
+
+    }
+
+}
+
+/**
+ * Implementation of hook_menu
+ */
+function ajax_user_search_menu() {
+
+    $items = [];
+
+    // api endpoint
+    $items['ajax-user-search/%'] = [
+        'title'            => 'API',
+        'description'      => 'Backend api for ajax user search module',
+        'page callback'    => 'ajax_user_search_api',
+        'page arguments'   => [1],
+        'access callback'  => true // dangerous - you would probably want to restrict this!
+    ];
+
+    return $items;
+
+}
+
+/**
+ * Menu callback for search api
+ */
+function ajax_user_search_api($query) {
+
+    $results = [];
+
+    $users = db_query("SELECT uid, name FROM users WHERE name LIKE :query", [
+        ':query' => '%' . $query . '%'
+    ]);
+
+    foreach ($users as $user)
+        $results[] = [
+            'uid'  => $user->uid,
+            'name' => $user->name
+        ];
+
+    echo json_encode([
+        'status'  => 'ok',
+        'results' => $results
+    ]);
+
+    // remember to call drupal_exit() afterwards - prevents Drupal trying to render
+    // a themed page - just echo your json and exit
+    drupal_exit();
+    
+}

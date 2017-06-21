@@ -1,0 +1,49 @@
+<?php 
+
+/**
+ * Implementation of hook_block_info
+ */
+function ajax_user_search_block_info() {
+    
+    return [
+        'ajax_user_search_form' => [
+            'info'   => 'Search Users',
+            'weight' => 0,
+            'status' => 0,
+            'region' => 'content',
+            'cache'  => DRUPAL_NO_CACHE
+        ]
+    ];
+
+}
+
+/**
+ * Implementation of hook_block_view
+ */
+function ajax_user_search_block_view($delta = '') {
+    
+    if ($delta == 'ajax_user_search_form') {
+
+        return [
+            'subject' => 'Search Users',
+            'content' => 'Block content here'
+        ];
+
+        /*
+
+        $module_path = drupal_get_path('module', 'ajax_user_search');
+        $template    = file_get_contents($module_path . '/user-search/dist/index.html');
+
+        # add the correct path prefix to compiled js files ..
+        $template = preg_replace('/(\w+\.\w+\.\w+\.(js|css))/', '/' . $module_path . '/user-search/dist/$1', $template);
+
+        return [
+            'subject' => 'Search Users',
+            'content' => $template
+        ];
+
+        */
+
+    }
+
+}

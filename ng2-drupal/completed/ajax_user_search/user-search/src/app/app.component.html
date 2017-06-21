@@ -1,0 +1,8 @@
+<form name="user-search-form">
+  <input type="text" class="form-control" name="search-query" placeholder="Start typing..." [(ngModel)]="searchQuery" (keyup)="doSearch()" />
+</form>
+<ul class="results">
+  <li class="result" *ngFor="let user of users">
+    <a href="/user/{{ user.uid }}">{{ user.name }}</a>
+  </li>
+</ul>

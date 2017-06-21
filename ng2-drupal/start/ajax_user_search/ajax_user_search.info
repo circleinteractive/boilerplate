@@ -1,0 +1,5 @@
+name           = Ajax user search
+description    = Custom module demonstrating hosting an Angular 2 application in a Drupal block
+package        = Circle
+core           = 7.x
+version        = 7.x-1.0
